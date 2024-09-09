@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Demo</title>
+  <script src="https://unpkg.com/react/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const Demo = () => {
+      const [products, setProducts] = React.useState([]);
+
+      React.useEffect(() => {
+        fetch('https://dummyjson.com/products')
+          .then(response => response.json())
+          .then(data => setProducts(data.products))
+      }, []);
+
+      return (
+        <div>
+          <h1>Product </h1>
+          {products.map(product => (
+            <div key={product.id}>
+              <h2>{product.title}</h2>
+              <img src={product.thumbnail} alt={product.title} />
+            </div>
+          ))}
+        </div>
+      );
+    }
+
+    ReactDOM.render(<Demo />, document.getElementById('root'));
+  </script>
+</body>
+</html>
